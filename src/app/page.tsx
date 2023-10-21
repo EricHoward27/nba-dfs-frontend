@@ -8,6 +8,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <main className="p-24">
+      {/** fetch the user from the session to use data object from options */}
        <Nav user={session?.user} expires={session?.expires as string }/>
       <section className='py-12 flex flex-col items-center text-center'>
         <h1 className='text-4xl font-bold'>NBA DFS Lineup Generator</h1>
