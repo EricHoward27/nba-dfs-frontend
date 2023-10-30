@@ -1,7 +1,16 @@
 'use client'
 import React, {useEffect, useState } from 'react';
 import { getPlayers } from '../api/playersApi';
-import { Table } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -40,7 +49,8 @@ function PlayerTable() {
   // filter players by position
   const filteredPlayers = players.filter(player => !positionFilter || player.Position === positionFilter); // if positionFilter is empty string, return all players, otherwise return players that match the positionFilter
   return ( 
-    <div className='bg-white shadow-md rounded my-6'>
+    <div>
+      {/** Filter Dropdown */}
      <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant={'outline'}>Filter by Position</Button>
@@ -59,6 +69,26 @@ function PlayerTable() {
       </DropdownMenuContent>
      </DropdownMenu>
 
+      {/** Player Table */}
+      <Table>
+        <TableCaption>Player Pool</TableCaption>
+        <TableHead>
+          <TableRow>
+            <TableCell>Player ID</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Position</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredPlayers.map((player:Player) => (
+            <TableRow key={player.StatID}>
+              <TableCell>{player.StatID}</TableCell>
+              <TableCell>{player.Name}</TableCell>
+              <TableCell>{player.Position}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
    );
 }
