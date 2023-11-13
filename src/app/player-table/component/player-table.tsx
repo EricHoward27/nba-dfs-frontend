@@ -72,7 +72,7 @@ function PlayerTable() {
       <DropdownMenuContent className='w-56'>
         <DropdownMenuLabel>Player Position</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={positionFilter} onValueChange={(value: string ) => setPositionFilter}>
+        <DropdownMenuRadioGroup value={positionFilter} onValueChange={(value: string ) => setPositionFilter(value as DropDownOption)}>
           <DropdownMenuRadioItem value=''>All</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value='PG'>PG</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value='SG'>SG</DropdownMenuRadioItem>
