@@ -27,6 +27,20 @@ type Player = {
   id?: string;
   Name?: string;
   Position: string;
+  Points: string;
+  FantasyPointsDraftKings: string;
+  FantasyPointsFanDuel: string;
+  DraftKingsSalary: string;
+  FanDuelSalary: string;
+  Minutes: string;
+  Assists: string;
+  Steals: string;
+  Rebounds: string;
+  BlockedShots: string;
+  UsageRatePercentage: string;
+  PlusMinus: string;
+  DoubleDoubles: string;
+  TripleDoubles: string;
 }
 // define type for dropdown options
 type DropDownOption = 'All' | 'PG' | 'SG' | 'SF' | 'PF' | 'C' | 'G' | 'F' ;
@@ -72,19 +86,46 @@ function PlayerTable() {
       {/** Player Table */}
       <Table>
         <TableCaption>Player Pool</TableCaption>
-        <TableHead>
+        <TableHeader>
           <TableRow>
             <TableCell>Player ID</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Position</TableCell>
+            <TableCell>Points</TableCell>
+            <TableCell>FantasyPointsDraftKings</TableCell>
+            <TableCell>FantasyPointsFanDuel</TableCell>
+            <TableCell>DraftKingsSalary</TableCell>
+            <TableCell>FanDuelSalary</TableCell>
+            <TableCell>Minutes</TableCell>
+            <TableCell>Assists</TableCell>
+            <TableCell>Steals</TableCell>
+            <TableCell>Rebounds</TableCell>
+            <TableCell>BlockedShots</TableCell>
+            <TableCell>UsageRatePercentage</TableCell>
+            <TableCell>PlusMinus</TableCell>
+            <TableCell>DoubleDoubles</TableCell>
+            <TableCell>TripleDoubles</TableCell>
           </TableRow>
-        </TableHead>
+        </TableHeader>
         <TableBody>
           {filteredPlayers.map((player:Player) => (
             <TableRow key={player.StatID}>
               <TableCell>{player.StatID}</TableCell>
               <TableCell>{player.Name}</TableCell>
               <TableCell>{player.Position}</TableCell>
+              <TableCell>{player.FantasyPointsDraftKings}</TableCell>
+              <TableCell>{player.FantasyPointsFanDuel}</TableCell>
+              <TableCell>{player.DraftKingsSalary}</TableCell>
+              <TableCell>{player.FanDuelSalary}</TableCell>
+              <TableCell>{player.Minutes}</TableCell>
+              <TableCell>{player.Assists}</TableCell>
+              <TableCell>{player.Steals}</TableCell>
+              <TableCell>{player.Rebounds}</TableCell>
+              <TableCell>{player.BlockedShots}</TableCell>
+              <TableCell>{player.UsageRatePercentage}</TableCell>
+              <TableCell>{player.PlusMinus}</TableCell>
+              <TableCell>{player.DoubleDoubles}</TableCell>
+              <TableCell>{player.TripleDoubles}</TableCell>
             </TableRow>
           ))}
         </TableBody>
