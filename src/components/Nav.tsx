@@ -4,6 +4,7 @@ import { signIn, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button'
 import { ModeToggle } from "./ui/toggle-mode"
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Nav component for the main navigation bar at the top of the page
 // This component will be reusable across all pages as it can be placed in the layout component and will be rendered on every page
@@ -12,7 +13,15 @@ export default function Nav( { user }: Session) {
     return (
         <header>
             <nav className='flex justify-between items-center py-8'>
-            <h1>NBA DFS LINEUP GENERATOR</h1>
+                <Link href='/'>
+                    <h1>NBA DFS LINEUP GENERATOR</h1>
+                </Link>
+            
+            <ul>
+                <Link href='/player-table'>
+                    Players Pool
+                </Link>
+            </ul>
                 <ul className='flex items-center gap-12'>
                     {/** checking for a user; if the user is not sign in or null then show the sign in btn */}
                     { !user && (
