@@ -51,14 +51,28 @@ function PlayerTable() {
   const [positionFilter, setPositionFilter] = useState<DropDownOption | ''>(''); // set initial state to empty string
 
   // fetch players from api
-  useEffect(() => {
-    const date = '2023-10-29'; // hardcode date for now
+  const fetchPlayerData = () => {
+    // format today's data to match api format (YYYY-MM-DD)
+    const today = new Date();
+    const date = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    // fetch players from api with today's date
     getPlayers(date) // getPlayers returns a promise
-    .then((data: Player[]) => { // when the promise resolves, set the players state
-      setPlayers(data); // setPlayers is a function that updates the state
-      setLoading(false); // set loading to false
+    .then((data: Player[]) => {
+      setPlayers(data); // Update the state with the fetch data
+      setLoading(false); // Update loading state to false
     })
-  }, []);
+    .catch((error) => {
+      console.error('Error fetching players: ', error);
+    });
+  };
+  useEffect(() => {
+    // mount the fetch data to the component mount
+    fetchPlayerData();
+    // set up an interval to fetch the player data every 24 hours
+    const interval = setInterval(fetchPlayerData, 1000 * 60 * 60 * 24);
+    // clean up interval on unmount to prevent any memory leaks
+    return () => clearInterval(interval);
+  }, []); // pass empty array to only run once on mount
 
   // filter players by position
   const filteredPlayers = players.filter(player => !positionFilter || player.Position === positionFilter); // if positionFilter is empty string, return all players, otherwise return players that match the positionFilter
