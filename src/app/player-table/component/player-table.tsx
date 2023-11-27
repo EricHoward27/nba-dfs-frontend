@@ -1,5 +1,6 @@
 'use client'
 import React, {useEffect, useState } from 'react';
+import { Progress } from "@/components/ui/progress"
 import { getPlayers } from '../api/playersApi';
 import {
   Table,
@@ -49,12 +50,25 @@ function PlayerTable() {
   const [players, setPlayers] = useState<Player[]>([]); // set initial state to empty array
   const [loading, setLoading] = useState<boolean>(true); // set initial state to true
   const [positionFilter, setPositionFilter] = useState<DropDownOption | ''>(''); // set initial state to empty string
+  /*
+  useEffect(() => {
+    const date = '2023-10-29'; // hardcode date for now
+    getPlayers(date) // getPlayers returns a promise
+    .then((data: Player[]) => { // when the promise resolves, set the players state
+      setPlayers(data); // setPlayers is a function that updates the state
+      setLoading(false); // set loading to false
+    })
+  }, []);
+  */
 
   // fetch players from api
   const fetchPlayerData = () => {
     // format today's data to match api format (YYYY-MM-DD)
     const today = new Date();
-    const date = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const date = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+
     // fetch players from api with today's date
     getPlayers(date) // getPlayers returns a promise
     .then((data: Player[]) => {
@@ -98,7 +112,13 @@ function PlayerTable() {
      </DropdownMenu>
 
       {/** Player Table */}
-      <Table>
+      {loading ? (
+        // Display the progress bar if loading is true
+        <div>
+          <Progress value={50}/>
+        </div>
+      ): (
+        <Table>
         <TableCaption>Player Pool</TableCaption>
         <TableHeader>
           <TableRow>
@@ -144,6 +164,7 @@ function PlayerTable() {
           ))}
         </TableBody>
       </Table>
+      )}
     </div>
    );
 }
