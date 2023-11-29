@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import Nav from '@/components/Nav'
+import { Server } from 'lucide-react'
+import ServerSideNav from '@/components/ServerSideNav'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute='class' defaultTheme='dark'>
+          <ServerSideNav />
            {children}
         </ThemeProvider>
       </body>
