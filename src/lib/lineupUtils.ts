@@ -1,10 +1,4 @@
-type Player = {
-    Name: string;
-    Position: string;
-    Points: string;
-    FantasyPointsDraftKings: string;
-    FantasyPointsFanDuel: string;
-}
+import { Player } from '../app/types/Player'
 
 // this is the lineup generator function 
 // we will pass the Players array to the player parameter

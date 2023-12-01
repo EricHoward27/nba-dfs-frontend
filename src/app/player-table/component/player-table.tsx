@@ -1,7 +1,8 @@
 'use client'
 import React, {useEffect, useState } from 'react';
 import { Progress } from "@/components/ui/progress"
-import { getPlayers } from '../api/playersApi';
+import { Player } from '../../types/Player';
+import { usePlayerContext } from '@/app/context/PlayerContext';
 import {
   Table,
   TableBody,
@@ -22,34 +23,20 @@ import {
   DropdownMenuRadioGroup } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 
-// Define a type for player data
-type Player = {
-  StatID?: string,
-  id?: string;
-  Name?: string;
-  Position: string;
-  Points: string;
-  FantasyPointsDraftKings: string;
-  FantasyPointsFanDuel: string;
-  DraftKingsSalary: string;
-  FanDuelSalary: string;
-  Minutes: string;
-  Assists: string;
-  Steals: string;
-  Rebounds: string;
-  BlockedShots: string;
-  UsageRatePercentage: string;
-  PlusMinus: string;
-  DoubleDoubles: string;
-  TripleDoubles: string;
-}
+type PlayerTableProps = {
+  players: Player[];
+  loading: boolean;
+};
+
 // define type for dropdown options
 type DropDownOption = 'All' | 'PG' | 'SG' | 'SF' | 'PF' | 'C' | 'G' | 'F' ;
 
-function PlayerTable() {
-  const [players, setPlayers] = useState<Player[]>([]); // set initial state to empty array
-  const [loading, setLoading] = useState<boolean>(true); // set initial state to true
+const PlayerTable: React.FC = () => {
+  const { players, loading } = usePlayerContext();
+  //const [players, setPlayers] = useState<Player[]>([]); // set initial state to empty array
+  //const [loading, setLoading] = useState<boolean>(true); // set initial state to true
   const [positionFilter, setPositionFilter] = useState<DropDownOption | ''>(''); // set initial state to empty string
+  console.log("This is the player table data: " + players)
   /*
   useEffect(() => {
     const date = '2023-10-29'; // hardcode date for now
@@ -60,33 +47,6 @@ function PlayerTable() {
     })
   }, []);
   */
-
-  // fetch players from api
-  const fetchPlayerData = () => {
-    // format today's data to match api format (YYYY-MM-DD)
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    const date = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
-
-    // fetch players from api with today's date
-    getPlayers(date) // getPlayers returns a promise
-    .then((data: Player[]) => {
-      setPlayers(data); // Update the state with the fetch data
-      setLoading(false); // Update loading state to false
-    })
-    .catch((error) => {
-      console.error('Error fetching players: ', error);
-    });
-  };
-  useEffect(() => {
-    // mount the fetch data to the component mount
-    fetchPlayerData();
-    // set up an interval to fetch the player data every 24 hours
-    const interval = setInterval(fetchPlayerData, 1000 * 60 * 60 * 24);
-    // clean up interval on unmount to prevent any memory leaks
-    return () => clearInterval(interval);
-  }, []); // pass empty array to only run once on mount
 
   // filter players by position
   const filteredPlayers = players.filter(player => !positionFilter || player.Position === positionFilter); // if positionFilter is empty string, return all players, otherwise return players that match the positionFilter

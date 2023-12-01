@@ -1,28 +1,47 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import Nav from '@/components/Nav'
-import { Button } from '@/components/ui/button'
 import { GenerateLineup } from '../components/generate-lineup';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from './(auth)/api/auth/[...nextauth]/route';
 import { Player } from './types/Player';
 import { getPlayers } from './player-table/api/playersApi';
 import { generateRandomLineup } from '@/lib/lineupUtils';
-import { useSession } from 'next-auth/react';
+import { usePlayerContext } from './context/PlayerContext';
+import LineupDisplay from '@/components/LineupDisplay';
 
-export default function Home({session}: {session: any}) {
-  // set the state for the players
-  const [players, setPlayers] = useState<Player[]>([]);
+
+export default function Home() {
+  // set the state for the players to the context
+  const { players, setPlayers } = usePlayerContext();
   // this is to set the state for the lineup
   const [lineup, setLineup] = useState<Player[]>([]);
-  // this is to get the session data
-  // Here we use getServerSession to get the session data that check the user is sign in 
+  // set the state for loading to the context
+  const { loading, setLoading } = usePlayerContext();
 
-  // fetch player data on the client side
- // const fetchPlayersData = async () => {
- //   const playersData = await getPlayers();
-   // setPlayers(playersData);
- // };
+  // fetch players from api
+  const fetchPlayerData = () => {
+    // format today's data to match api format (YYYY-MM-DD)
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const date = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+
+    // fetch players from api with today's date
+    getPlayers(date) // getPlayers returns a promise
+    .then((data: Player[]) => {
+      setPlayers(data); // Update the state with the fetch data
+      setLoading(false); // Update loading state to false
+    })
+    .catch((error) => {
+      console.error('Error fetching players: ', error);
+    });
+  };
+  useEffect(() => {
+    // mount the fetch data to the component mount
+    fetchPlayerData();
+    // set up an interval to fetch the player data every 24 hours
+    const interval = setInterval(fetchPlayerData, 1000 * 60 * 60 * 24);
+    // clean up interval on unmount to prevent any memory leaks
+    return () => clearInterval(interval);
+  }, []); // pass empty array to only run once on mount
 
   // Generate the lineup function
   const handleGenerateLineup = () => {
@@ -33,6 +52,7 @@ export default function Home({session}: {session: any}) {
   const handleClearLineup = () => {
     setLineup([]);
   }
+  console.log(players)
   return (
     <main className="p-24">
       {/** fetch the user from the session to use data object from options */}
@@ -42,6 +62,7 @@ export default function Home({session}: {session: any}) {
       </section>
       {/** Generate the lineup */}
       <GenerateLineup onGenerate={handleGenerateLineup} onClear={handleClearLineup} />
+      {lineup.length > 0 && <LineupDisplay lineup={lineup}/>}
     </main>
   )
 }

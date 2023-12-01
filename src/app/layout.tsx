@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import Nav from '@/components/Nav'
 import { Server } from 'lucide-react'
 import ServerSideNav from '@/components/ServerSideNav'
+import { PlayerProvider } from './context/PlayerContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute='class' defaultTheme='dark'>
           <ServerSideNav />
+          <PlayerProvider>
            {children}
+          </PlayerProvider>
         </ThemeProvider>
       </body>
     </html>
