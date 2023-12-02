@@ -38,7 +38,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
                     </CardDescription>  
                 </CardContent>
                 <CardFooter>
-                    <CardDescription>Projected Points:</CardDescription>
+                    <CardDescription>Projected Points: {player.fantasyProjection}</CardDescription>
                 </CardFooter>
             </div>
         </Card>

@@ -16,4 +16,5 @@ export type Player = {
     PlusMinus: string;
     DoubleDoubles: string;
     TripleDoubles: string;
+    fantasyProjection?: number;
 };
