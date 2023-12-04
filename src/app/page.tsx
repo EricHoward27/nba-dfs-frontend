@@ -17,12 +17,28 @@ export default function Home() {
   const { loading, setLoading } = usePlayerContext();
 
   // fetch players from api
+  // manually set date to 2023-12-02 for now to test api in development
   const fetchPlayerData = () => {
+    const date = '2023-12-02';
+
+    // fetch players from api 
+    getPlayers(date)
+    .then((data: Player[]) => {
+      setPlayers(data); // Update the state with the fetch data
+      setLoading(false); // Update loading state to false
+    })
+    .catch((error) => {
+      console.error('Error fetching players: ', error);
+    });  
+  }; 
+  useEffect(() => {
+    // mount the fetch data to the component mount
+    fetchPlayerData();
+  }, [])
+ /* const fetchPlayerData = () => {
     // format today's data to match api format (YYYY-MM-DD)
     const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    const date = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+    const date = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
     // fetch players from api with today's date
     getPlayers(date) // getPlayers returns a promise
@@ -33,8 +49,8 @@ export default function Home() {
     .catch((error) => {
       console.error('Error fetching players: ', error);
     });
-  };
-  useEffect(() => {
+  }; */
+  /* useEffect(() => {
     // mount the fetch data to the component mount
     fetchPlayerData();
     // set up an interval to fetch the player data every 24 hours
@@ -42,7 +58,7 @@ export default function Home() {
     // clean up interval on unmount to prevent any memory leaks
     return () => clearInterval(interval);
   }, []); // pass empty array to only run once on mount
-
+*/
   // Generate the lineup function
   const handleGenerateLineup = () => {
     const newLineup = generateRandomLineup(players);

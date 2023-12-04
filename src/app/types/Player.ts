@@ -17,4 +17,6 @@ export type Player = {
     DoubleDoubles: string;
     TripleDoubles: string;
     fantasyProjection?: number;
+    DraftKingsPosition?: string;
+    FanDuelPosition?: string;
 };
