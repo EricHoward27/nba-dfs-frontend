@@ -29,9 +29,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
                     <Switch checked={isDraftKings} onCheckedChange={handleToggle}/>
                 </CardTitle>
                 <CardContent>
-                    <CardHeader>{isDraftKings ? player.DraftKingsPosition : player.FanDuelPosition}</CardHeader>
+                    <CardHeader>{`$${isDraftKings ? player.DraftKingsSalary : player.FanDuelSalary}`}</CardHeader>
                     <CardDescription className='text-lg font-bold'>Name: {player.Name}</CardDescription>
-                    <CardDescription>Position: {player.Position}</CardDescription>
+                    <CardDescription>Position: {isDraftKings ? player.DraftKingsPosition : player.FanDuelPosition}</CardDescription>
                     <CardDescription>Points: {player.Points}</CardDescription>
                     <CardDescription>
                         Fantasy Points: {isDraftKings ? player.FantasyPointsDraftKings : player.FantasyPointsFanDuel }
