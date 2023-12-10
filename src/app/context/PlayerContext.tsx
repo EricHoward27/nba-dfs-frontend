@@ -8,13 +8,17 @@ type PlayerContextType = {
     setPlayers: (players: Player[]) => void;
     loading: boolean;
     setLoading: (loading: boolean) => void;
+    error: string | null;
+    setError: (error: string | null) => void;
 };
 // creating the context with a default value of empty arrays
 const PlayerContext = createContext<PlayerContextType>({
     players: [],
     setPlayers: () => {},
     loading: true,
-    setLoading: () => {}
+    setLoading: () => {},
+    error: null,
+    setError: () => {},
 });
 // hook for using the context
 export const usePlayerContext = () => useContext(PlayerContext);
@@ -28,13 +32,16 @@ type PlayerProviderProps = {
 export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }): ReactNode => {
     const [players, setPlayers] = useState<Player[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
     console.log("This is the player provider data: " + players)
     return (
         <PlayerContext.Provider value={{
             players,
             setPlayers,
             loading,
-            setLoading
+            setLoading,
+            error,
+            setError,
         }}> 
             {children}
         </PlayerContext.Provider>
