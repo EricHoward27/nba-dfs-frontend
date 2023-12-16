@@ -1,5 +1,5 @@
 'use client'
-import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback, SetStateAction, Dispatch } from 'react';
 import { Player } from '../types/Player';
 import { getPlayers } from '../player-table/api/playersApi';
 import { generateRandomLineup } from '@/lib/lineupUtils';
@@ -16,6 +16,9 @@ type PlayerContextType = {
     setLineup: (lineup: Player[]) => void;
     generateLineup: () => void;
     clearLineup: () => void;
+    isModalOpen: boolean;
+    setModalOpen: Dispatch<SetStateAction<boolean>>;
+    
 };
 // creating the context with a default value of empty arrays
 const PlayerContext = createContext<PlayerContextType>({
@@ -29,6 +32,8 @@ const PlayerContext = createContext<PlayerContextType>({
     setLineup: () => {},
     generateLineup:() => {},
     clearLineup: () => {},
+    isModalOpen: false,
+    setModalOpen: (() => {}) as Dispatch<SetStateAction<boolean>>,
 });
 // hook for using the context
 export const usePlayerContext = () => useContext(PlayerContext);
@@ -44,6 +49,7 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }): Rea
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [lineup, setLineup ] = useState<Player[]>([]);
+    const [isModalOpen, setModalOpen] = useState(false);
 
     const generateLineup = () => {
         const newLineup = generateRandomLineup(players); // generate lineup
@@ -97,6 +103,8 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }): Rea
             setLineup,
             generateLineup,
             clearLineup,
+            isModalOpen,
+            setModalOpen
         }}> 
             {children}
         </PlayerContext.Provider>
