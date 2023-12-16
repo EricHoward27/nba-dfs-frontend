@@ -31,22 +31,10 @@ type PlayerTableProps = {
 // define type for dropdown options
 type DropDownOption = 'All' | 'PG' | 'SG' | 'SF' | 'PF' | 'C' | 'G' | 'F' ;
 
-const PlayerTable: React.FC = () => {
-  const { players, loading } = usePlayerContext();
-  //const [players, setPlayers] = useState<Player[]>([]); // set initial state to empty array
-  //const [loading, setLoading] = useState<boolean>(true); // set initial state to true
+const PlayerTable: React.FC<PlayerTableProps> = ({players, loading}) => {
+
   const [positionFilter, setPositionFilter] = useState<DropDownOption | ''>(''); // set initial state to empty string
-  console.log("This is the player table data: " + players)
-  /*
-  useEffect(() => {
-    const date = '2023-10-29'; // hardcode date for now
-    getPlayers(date) // getPlayers returns a promise
-    .then((data: Player[]) => { // when the promise resolves, set the players state
-      setPlayers(data); // setPlayers is a function that updates the state
-      setLoading(false); // set loading to false
-    })
-  }, []);
-  */
+ 
 
   // filter players by position
   const filteredPlayers = players.filter(player => !positionFilter || player.Position === positionFilter); // if positionFilter is empty string, return all players, otherwise return players that match the positionFilter
