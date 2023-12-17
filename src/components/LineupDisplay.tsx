@@ -1,9 +1,12 @@
 import React from "react";
 import { usePlayerContext } from "@/app/context/PlayerContext";
+import { Player } from "@/app/types/Player";
 import PlayerCard from "./PlayerCard";
 
-const LineupDisplay: React.FC = () => {
-    const { lineup } = usePlayerContext();
+type LineupDisplayProps = {
+    lineup: Player[];
+}
+const LineupDisplay: React.FC<LineupDisplayProps> = ({lineup}) => {
     return (
         <div>
             {lineup.map((player, index) => (

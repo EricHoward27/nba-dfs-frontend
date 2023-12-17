@@ -2,6 +2,7 @@
 import { GenerateLineup } from '../components/generate-lineup';
 import { usePlayerContext } from './context/PlayerContext';
 import LineupDisplay from '@/components/LineupDisplay';
+import LineupModal from '@/components/LineupModal';
 
 
 export default function Home() {
@@ -19,7 +20,8 @@ export default function Home() {
       {error && <div className='error-message'>{error}</div>}
       {/** Generate the lineup */}
       <GenerateLineup />
-      {lineup.length > 0 && <LineupDisplay />}
+      <LineupModal />
+      {lineup.length > 0 && <LineupDisplay lineup={lineup}/>}
     </main>
   )
 }
