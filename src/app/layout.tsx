@@ -2,10 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import Nav from '@/components/Nav'
-import { Server } from 'lucide-react'
 import ServerSideNav from '@/components/ServerSideNav'
 import { PlayerProvider } from './context/PlayerContext'
+import { SessionProvider } from 'next-auth/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,7 +24,9 @@ export default function RootLayout({
         <ThemeProvider attribute='class' defaultTheme='dark'>
           <ServerSideNav />
           <PlayerProvider>
+          <SessionProvider>
            {children}
+          </SessionProvider>
           </PlayerProvider>
         </ThemeProvider>
       </body>

@@ -3,7 +3,8 @@ import React, { createContext, useContext, useState, ReactNode, useEffect, useCa
 import { Player } from '../types/Player';
 import { getPlayers } from '../player-table/api/playersApi';
 import { generateRandomLineup } from '@/lib/lineupUtils';
-
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../(auth)/api/auth/[...nextauth]/route';
 // defining the context's type
 type PlayerContextType = {
     players: Player[];
@@ -18,6 +19,7 @@ type PlayerContextType = {
     clearLineup: () => void;
     isModalOpen: boolean;
     setModalOpen: Dispatch<SetStateAction<boolean>>;
+  
     
 };
 // creating the context with a default value of empty arrays
@@ -34,6 +36,8 @@ const PlayerContext = createContext<PlayerContextType>({
     clearLineup: () => {},
     isModalOpen: false,
     setModalOpen: (() => {}) as Dispatch<SetStateAction<boolean>>,
+  
+    
 });
 // hook for using the context
 export const usePlayerContext = () => useContext(PlayerContext);
@@ -51,6 +55,8 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }): Rea
     const [lineup, setLineup ] = useState<Player[]>([]);
     const [isModalOpen, setModalOpen] = useState(false);
 
+
+
     const generateLineup = () => {
         const newLineup = generateRandomLineup(players); // generate lineup
         setLineup(newLineup); // update the lineup state
@@ -59,6 +65,7 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }): Rea
     const clearLineup = () => {
         setLineup([]); // clear the lineup
     }
+    
     
         const fetchPlayerData = useCallback(async () => {
             // format today's data to match api format (YYYY-MM-DD)
@@ -104,7 +111,8 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }): Rea
             generateLineup,
             clearLineup,
             isModalOpen,
-            setModalOpen
+            setModalOpen,
+     
         }}> 
             {children}
         </PlayerContext.Provider>
