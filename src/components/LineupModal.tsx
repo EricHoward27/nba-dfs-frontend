@@ -9,6 +9,7 @@ const LineupModal = () => {
     const handleClose = () => {
         setModalOpen(false);
     }
+    console.log("Session user object:", session?.user)
     const saveLineup = async () => {
         console.log(session)
         const token = session?.accessToken;
@@ -22,9 +23,10 @@ const LineupModal = () => {
             console.error('No access token available');
             return;
         }
-
+        const playerIds = lineup.map(player => player.StatID);
+        console.log("This is the playerIds:", playerIds)
         try {
-            const response = await fetch('/api/lineup', {
+            const response = await fetch('http://localhost:5000/api/lineup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,8 +34,8 @@ const LineupModal = () => {
                 },
                 body: JSON.stringify({
                     userId: session.user.id,
-                    date: new Date().toString(),
-                    lineup: lineup,
+                    date: new Date().toISOString(),
+                    playerIds: playerIds,
                 }),
             });
             

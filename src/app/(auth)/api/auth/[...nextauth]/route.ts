@@ -17,14 +17,25 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt',
     },
+    jwt: {
+        secret: process.env.JWT_SECRET,
+    },
     callbacks: {
-        async jwt({ token, account }) {
-            if(account) {
+        async jwt({ token, account, user }) {
+            if(account && user) {
+                token.userId = user.email;
+            }
+
+            if(account?.access_token) {
                 token.accessToken = account.access_token;
             }
             return token;
         },
         async session ({ session, token }) {
+            // tak the userid from token and add it to the session
+            session.user!.email = token.userId as string;
+            
+
             session.accessToken = token.accessToken;
             return session;
         }

@@ -4,7 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import ServerSideNav from '@/components/ServerSideNav'
 import { PlayerProvider } from './context/PlayerContext'
-import { SessionProvider } from 'next-auth/react'
+import { NextAuthProvider } from './providers/NextAuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,11 +23,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute='class' defaultTheme='dark'>
           <ServerSideNav />
+          <NextAuthProvider>
           <PlayerProvider>
-          <SessionProvider>
            {children}
-          </SessionProvider>
           </PlayerProvider>
+          </NextAuthProvider>
         </ThemeProvider>
       </body>
     </html>
