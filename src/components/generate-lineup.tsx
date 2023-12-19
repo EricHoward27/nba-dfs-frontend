@@ -12,6 +12,7 @@ export const GenerateLineup: React.FC = () => {
     }
     return (
         <div className='flex gap-6 items-center justify-center'>
+            
             <Button onClick={handleGenerateLineupClick}>Generate Lineup</Button>
             <Button onClick={clearLineup}>Clear Lineup</Button>
         </div>

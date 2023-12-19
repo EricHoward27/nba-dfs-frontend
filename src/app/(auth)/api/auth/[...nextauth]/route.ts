@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({ token, account, user }) {
             if(account && user) {
-                token.userId = user.email;
+                token.userId = user.id;
             }
 
             if(account?.access_token) {
@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
         },
         async session ({ session, token }) {
             // tak the userid from token and add it to the session
-            session.user!.email = token.userId as string;
+            session.user!.id = token.userId as string;
             
 
             session.accessToken = token.accessToken;

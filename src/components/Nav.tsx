@@ -14,11 +14,11 @@ export default function Nav( { user }: Session) {
         <header>
             <nav className='flex justify-between items-center py-8'>
                 <Link href='/'>
-                    <h1>NBA DFS LINEUP GENERATOR</h1>
+                    <Image src='/images/dfs-logo.png' alt='NBA Logo' width={48} height={48} />
                 </Link>
             
             <ul>
-                <Link href='/player-table'>
+                <Link href='/player-table'className='hover:bg-yellow-400'>
                     Players Pool
                 </Link>
             </ul>

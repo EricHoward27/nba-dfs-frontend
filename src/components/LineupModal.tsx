@@ -3,6 +3,7 @@ import { usePlayerContext } from "@/app/context/PlayerContext";
 import LineupDisplay from "./LineupDisplay";
 import { useSession } from "next-auth/react";
 
+
 const LineupModal = () => {
     const {isModalOpen, setModalOpen, lineup } = usePlayerContext();
     const { data: session } = useSession();
@@ -26,7 +27,7 @@ const LineupModal = () => {
         const playerIds = lineup.map(player => player.StatID);
         console.log("This is the playerIds:", playerIds)
         try {
-            const response = await fetch('http://localhost:5000/api/lineup', {
+            const response = await fetch('http://localhost:5000/api/lineup/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ const LineupModal = () => {
                 <LineupDisplay lineup={lineup}/>
                 <div className="modal-action">
                     <button className="btn" onClick={saveLineup}>Save Lineup</button>
-                     <button onClick={(handleClose)} className="btn btn-secondary">Close</button>
+                     <button onClick={(handleClose)} className="btn btn-primary">Close</button>
                 </div>
                 <button onClick={handleClose} className="btn btn-circle btn-sm absolute right-2 top-2">x</button>
             </div>
