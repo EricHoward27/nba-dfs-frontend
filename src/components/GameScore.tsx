@@ -47,7 +47,7 @@ const GameScoreNavbar = () => {
         <div ref={scrollContainer} className='flex overflow-hidden whitespace-nowrap scroll-smooth px-4 py-2'>
           <div className='grid grid-flow-col auto-cols-max gap-4 px-4 py-2'>
              {games.map((game, index) => (
-                <div key={index} className='min-w-max flex-col items-center  text-white rounded-lg shadow p-2'>
+                <div key={index} className='min-w-max flex-col items-center bg-secondary rounded-lg shadow p-2'>
                     {/**Visitors team game content */}
                     <div className='flex items-center gap-2'>
                         <Image src={game.teams.visitors.logo} alt={game.teams.visitors.nickname} width={10} height={10} />
