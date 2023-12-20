@@ -1,11 +1,13 @@
 import { Game } from '../app/types/GameData';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import { Button } from './ui/button';
 
 const GameScoreNavbar = () => {
     const [games, setGames ] = useState<Game[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const scrollContainer = useRef(null);
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -34,21 +36,38 @@ const GameScoreNavbar = () => {
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
+    // scroll handler that will be used to scroll the score navbar
+    const scroll = (scrollOffset: any) => {
+        (scrollContainer.current as any).scrollLeft += scrollOffset;
+    }
 
     return(
-        <div className='flex flex-wrap justify-center gap-2'>
-            {games.map((game, index) => (
-            <div key={index} className='flex-none bg-secondary text-white rounded-lg'>
-                <div className='flex items-center space-x-2'>
-                    <Image src={game.teams.visitors.logo} alt={game.teams.visitors.nickname}width={10} height={10} className='object-cover'/>
-                 <div>
-                    <span className='text-xs'>{game.teams.visitors.name} vs {game.teams.home.name}</span>
-                    <span className='font-bold'>{game.scores.visitors.points} - {game.scores.home.points}</span>
+      <div className='relative'>
+        <Button className='absolute left-0 z-10 bg-gray-800 text-white p-2' onClick={() => scroll(-100)}>{'<'}</Button>
+        <div ref={scrollContainer} className='flex overflow-hidden whitespace-nowrap scroll-smooth px-4 py-2'>
+          <div className='grid grid-flow-col auto-cols-max gap-4 px-4 py-2'>
+             {games.map((game, index) => (
+                <div key={index} className='min-w-max flex-col items-center  text-white rounded-lg shadow p-2'>
+                    {/**Visitors team game content */}
+                    <div className='flex items-center gap-2'>
+                        <Image src={game.teams.visitors.logo} alt={game.teams.visitors.nickname} width={10} height={10} />
+                        <span className='text-sm'>{game.teams.visitors.name}</span>
+                    </div>
+                    <div className='text-xs'>{game.scores.visitors.points}</div>
+                    <div className='text-xs my-1'>-</div> 
+                    {/**Home team game content */}
+                    <div className='flex items-center gap-2'>
+                        <Image src={game.teams.home.logo} alt={game.teams.home.nickname} height={10} width={10}/>
+                        <span className='text-sm'>{game.teams.home.name}</span>
+                    </div> 
+                    <div className='text-xs'>{game.scores.home.points}</div> 
                 </div>
-              </div>
-            </div>
-            ))}
+             ))}
+          </div>
+          <Button className='absolute right-0 z-10 bg-gray-800 text-white p-2' onClick={() => scroll(100)}>{'>'}</Button>
         </div>
+        
+      </div>
     )
 }
 export default GameScoreNavbar;
