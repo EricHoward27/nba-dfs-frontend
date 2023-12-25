@@ -3,8 +3,7 @@ import React, { createContext, useContext, useState, ReactNode, useEffect, useCa
 import { Player } from '../types/Player';
 import { getPlayers } from '../player-table/api/playersApi';
 import { generateRandomLineup } from '@/lib/lineupUtils';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../(auth)/api/auth/[...nextauth]/route';
+
 // defining the context's type
 type PlayerContextType = {
     players: Player[];
@@ -97,7 +96,7 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }): Rea
             return () => clearInterval(interval);
           }, [fetchPlayerData]); // pass empty array to only run once on mount
     
-    console.log("This is the player provider data: " + players)
+ 
     return (
         <PlayerContext.Provider value={{
             players,

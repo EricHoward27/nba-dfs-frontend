@@ -15,7 +15,7 @@ const GameScoreNavbar = () => {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': 'ae79fe5b01msh24aa2cde7368113p13d652jsn6150bad87405',
+                    'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
 		            'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
                 }
             };

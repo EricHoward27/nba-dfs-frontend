@@ -10,9 +10,9 @@ const LineupModal = () => {
     const handleClose = () => {
         setModalOpen(false);
     }
-    console.log("Session user object:", session?.user)
+    //console.log("Session user object:", session?.user)
     const saveLineup = async () => {
-        console.log(session)
+        //console.log(session)
         const token = session?.accessToken;
         // check if user or session was return
         if(!session || !session.user) {
@@ -25,7 +25,7 @@ const LineupModal = () => {
             return;
         }
         const playerIds = lineup.map(player => player.StatID);
-        console.log("This is the playerIds:", playerIds)
+        //console.log("This is the playerIds:", playerIds)
         try {
             const response = await fetch('http://localhost:5000/api/lineup/', {
                 method: 'POST',

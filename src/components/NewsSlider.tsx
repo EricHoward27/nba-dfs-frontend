@@ -25,16 +25,16 @@ const NewsSlider = ({ articles }: any) => {
          <Card>
             <div className='news-column p-4 primary-foreground text-muted-foreground'>
                 <CardTitle>
-                <h2 className='text-2xl font-bold mb-3'>Top News Stories</h2>
+                    Top News Stories
                 </CardTitle>
                 <CardContent>
                 <ul>
                     {articles.map((article: any) => (
-                        <li key={articles.id} className='mb-2 hover:bg-yellow-400 p-2 rounded'>
+                        <li key={article.title} className='mb-2 hover:bg-yellow-400 p-2 rounded'>
                             <a href={article.url} target='_blank' rel='noopener noreferrer' className='no-underline'>
-                            <CardDescription> <p className='text-lg font-semibold'>{article.title}</p></CardDescription> 
+                            <CardDescription>{article.title}</CardDescription> 
                             </a>
-                            <CardDescription><p className='text-sm'>{article.source}</p></CardDescription> 
+                            <CardDescription>{article.source}</CardDescription> 
                         </li>
                     ))}
                 </ul>
