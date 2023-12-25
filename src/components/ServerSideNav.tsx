@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from '../app/(auth)/api/auth/[...nextauth]/route';
+import { authOptions } from '../lib/authOption';
 import Nav from "./Nav";
 
 export default async function ServerSideNav() {
