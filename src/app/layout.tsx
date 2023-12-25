@@ -6,8 +6,11 @@ import ServerSideNav from '@/components/ServerSideNav'
 import { PlayerProvider } from './context/PlayerContext'
 import { NextAuthProvider } from './providers/NextAuthProvider'
 import Footer from '@/components/footer'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
 const inter = Inter({ subsets: ['latin'] })
+
+if (process.env.NODE_ENV === 'production') disableReactDevTools();
 
 export const metadata: Metadata = {
   title: 'ERA NBA LINEUP GENERATOR',
